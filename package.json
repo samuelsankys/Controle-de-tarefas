@@ -1,5 +1,5 @@
 {
-  "name": "Controle-de-tarefas",
+  "name": "controle-de-tarefas",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,7 +17,7 @@
     "url": "https://github.com/samuelsankys/Controle-de-tarefas/issues"
   },
   "homepage": "https://github.com/samuelsankys/Controle-de-tarefas#readme",
-  "devDependencies": {
-    "git-commit-msg-linter": "^4.1.3"
+  "dependencies": {
+    "express": "^4.18.1"
   }
 }
