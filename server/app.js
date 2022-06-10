@@ -17,7 +17,6 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.use(ListRoutes);
-//app.use('/', index);
 
 
 module.exports = app;
