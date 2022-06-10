@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../../config/database');
+const List = require('./list.models');
 
 const Activity = db.define('activities', { 
     id: {
@@ -20,14 +21,6 @@ const Activity = db.define('activities', {
         type: Sequelize.INTEGER,
         allowNull: false,
         reference: { model: 'lists', key: 'id' },
-      },
-      created_at:{
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updated_at:{
-        type: Sequelize.DATE,
-        allowNull: false,
       }
 });
 

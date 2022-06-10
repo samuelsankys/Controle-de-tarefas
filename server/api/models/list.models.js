@@ -1,29 +1,26 @@
 const Sequelize = require('sequelize');
 const db = require('../../config/database');
+const Activity = require('./activities.models');
 
 const List = db.define('lists', { 
     id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      status: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      created_at:{
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updated_at:{
-        type: Sequelize.DATE,
-        allowNull: false,
-      }
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    status: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    }
 });
 
+List.hasOne(Activity,{
+  foreignKey: 'list_id'
+});
+Activity.belongsTo(List);
 module.exports = List
