@@ -28,3 +28,25 @@ exports.createList = async (req, res)=>{
     }
 }
 
+
+exports.deleteList = async (req, res)=>{
+    const { list_id } = req.params
+
+    try {
+        const list = await List.findByPk(list_id);
+        
+        if(! list){
+            return res.status(400).json({error: 'List not found'});
+        }
+
+        const listDel = await List.destroy({where: {id: list_id}});
+
+        if(! listDel){
+            return res.status(400).json({error: 'Deleted list failed'});
+        }
+
+        return res.status(200).json({message: 'List deleted successfully'});
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}

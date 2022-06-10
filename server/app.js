@@ -6,8 +6,6 @@ const router = express.Router();
 const ListRoutes = require('./api/routes/list.routes');
 
 
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
