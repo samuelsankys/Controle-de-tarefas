@@ -22,3 +22,30 @@ exports.getActivitiesList = async (req, res)=> {
         return res.status(500).json(error);
     }
 }
+
+exports.createActivity = async (req, res)=>{
+    let { list_id } = req.params;
+
+    const activityData = {
+        name: req.body.name,
+        status: 'not completed',
+        list_id
+    }
+
+    try {
+        const list = await List.findByPk(list_id);
+       
+        if(! list){
+            return res.status(404).json({error: 'List not found'});
+        }
+        
+        const activity = await Activity.create(activityData);
+
+        if(! activity){
+            return res.status(400).json({error: "Activity not created"});
+        }
+        return res.status(200).json(activity);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
