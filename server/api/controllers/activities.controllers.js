@@ -49,3 +49,40 @@ exports.createActivity = async (req, res)=>{
         return res.status(500).json(error);
     }
 }
+
+
+exports.updateActivity = async (req, res)=>{
+    let { list_id, activity_id } = req.params;
+
+    const activityData = {
+        name: req.body.name,
+        status: req.body.status,
+    }
+
+    try {
+        const list = await List.findByPk(list_id);
+       
+        if(! list){
+            return res.status(404).json({error: 'List not found'});
+        }
+
+        const activity = await Activity.findByPk(activity_id);
+       
+        if(! activity){
+            return res.status(404).json({error: 'Activity not found'});
+        }
+        if(activity.list_id != list_id){
+            return res.status(400).json({error: 'Activity not belongs list'});
+        }
+        
+        const activityUpdate = await Activity.update(activityData, {where: { id: activity_id }});
+
+        if(! activityUpdate){
+            return res.status(400).json({error: "Activity not updated"});
+        }
+        
+        return res.status(200).json(activityUpdate);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
