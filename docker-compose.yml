@@ -5,7 +5,7 @@ services:
     build: ./server
     command: npm run dev
     ports:
-      - '3000:${PORT}'
+      - '3001:${PORT}'
     env_file:
       - .env.development
     volumes:
