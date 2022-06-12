@@ -57,7 +57,6 @@ exports.updatedList = async (req, res)=>{
         name: req.body.name,
         status: req.body.status,
     }
-    const { name, status } = req.body;
 
     try {
         const list = await List.findByPk(list_id);
