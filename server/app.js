@@ -4,6 +4,7 @@ const router = express.Router();
 
 // IMPORTS ROUTES
 const ListRoutes = require('./api/routes/list.routes');
+const ActivitiesRoutes = require('./api/routes/activities.routes');
 
 
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.use(ListRoutes);
+app.use(ActivitiesRoutes);
 
 
 module.exports = app;

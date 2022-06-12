@@ -20,7 +20,12 @@ const List = db.define('lists', {
 });
 
 List.hasOne(Activity,{
-  foreignKey: 'list_id'
+  foreignKey: 'list_id',
+  as: 'activity',
+  onDelete: "CASCADE",
 });
-Activity.belongsTo(List);
+Activity.belongsTo(List, {
+  foreignKey: 'list_id',
+  as: 'list',
+});
 module.exports = List
