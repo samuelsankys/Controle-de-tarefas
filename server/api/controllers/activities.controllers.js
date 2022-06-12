@@ -80,8 +80,44 @@ exports.updateActivity = async (req, res)=>{
         if(! activityUpdate){
             return res.status(400).json({error: "Activity not updated"});
         }
-        
+
         return res.status(200).json(activityUpdate);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
+
+exports.deleteActivity = async (req, res)=>{
+    let { list_id, activity_id } = req.params;
+
+    try {
+        const list = await List.findByPk(list_id);
+       
+        if(! list){
+            return res.status(404).json({error: 'List not found'});
+        }
+
+        const activity = await Activity.findByPk(activity_id);
+       
+        if(! activity){
+            return res.status(404).json({error: 'Activity not found'});
+        }
+        if(activity.list_id != list_id){
+            return res.status(400).json({error: 'Activity not belongs list'});
+        }
+        
+        const activityDelete = await Activity.destroy({
+            where: { 
+                id: activity_id 
+            }
+        });
+
+        if(! activityDelete){
+            return res.status(400).json({error: "Activity not deleted"});
+        }
+        
+        return res.status(200).json(activityDelete);
+        
     } catch (error) {
         return res.status(500).json(error);
     }
