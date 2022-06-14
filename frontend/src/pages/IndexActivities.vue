@@ -55,7 +55,7 @@ export default defineComponent({
         const data = await activityList(id)
         activities.value = data
       } catch (error) {
-
+        $q.notify({ message: 'Erro ao carregar as atividades', icon: 'times', color: 'negative' })
       }
     }
 
