@@ -1,4 +1,4 @@
-import useApi from 'src/composables/UseApi'
+import useApi from 'src/composables/ActivityApi'
 
 export default function activityService () {
   const { list, post, update, remove, getById } = useApi('')

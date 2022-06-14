@@ -7,7 +7,7 @@
     <q-input
       outlined
       v-model="form.name"
-      label="Nome"
+      label="Atividade"
       lazy-rules
       class="col-lg-6 col-xs-12"
       :rules="[ val => val && val.length > 0 || 'Campo Obrigatório']"

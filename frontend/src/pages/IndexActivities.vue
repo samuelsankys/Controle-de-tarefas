@@ -10,14 +10,13 @@
         v-model:selected="selected"
       >
         <template v-slot:top>
-          <span class="text-h5">Activity</span>
+          <span class="text-h5">Atividades</span>
           <q-space />
-          <q-btn color="primary" label="Nova Lista" :to="{ name: 'formList' }" />
+          <q-btn color="primary" label="Nova Atividade" :to="{ name: 'formActivities' }" />
         </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-sm">
-            <q-btn icon="view" color="success" dense size="sm" @click="editList(props.row.id)"/>
-            <q-btn icon="edit" color="info" dense size="sm" @click="editList(props.row.id)"/>
+            <q-btn icon="edit" color="info" dense size="sm" @click="editActivity(props.row.id)"/>
             <q-btn icon="delete" color="negative" dense size="sm" @click="removeList(props.row.id)"/>
           </q-td>
         </template>
@@ -75,15 +74,16 @@ export default defineComponent({
       }
     }
 
-    const editList = async (id) => {
-      router.push({ name: 'formList', params: { id } })
+    const editActivity = async (id) => {
+      const idActivity = `${route.params.id}/activity/${id}`
+      router.push({ name: 'formActivities', params: { idActivity } })
     }
 
     return {
       activity,
       columns,
       removeList,
-      editList
+      editActivity
     }
   }
 })
