@@ -11,6 +11,22 @@ exports.getAll = async (req, res, next)=> {
     }
 }
 
+exports.getList = async (req, res)=> {
+    const { list_id } = req.params
+    
+    try {
+        const list = await List.findByPk(list_id);
+
+        if(! list){
+            return res.status(400).json({error: 'List not found'});
+        }
+
+        return res.status(200).json(list);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
+
 exports.createList = async (req, res)=>{
     try {
         const listData = {
