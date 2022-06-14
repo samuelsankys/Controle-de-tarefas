@@ -54,7 +54,7 @@ export default defineComponent({
     })
     onMounted(async () => {
       console.log(route.params)
-      if (route.params.id) {
+      if (route.params.activityId) {
         getList(route.params.id, route.params.activityId)
       }
     })

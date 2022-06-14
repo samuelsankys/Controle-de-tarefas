@@ -5,9 +5,6 @@
         :rows="activities"
         :columns="columns"
         row-key="name"
-        :selected-rows-label="getSelectedString"
-        selection="multiple"
-        v-model:selected="selected"
       >
         <template v-slot:top>
           <span class="text-h5">Atividades</span>

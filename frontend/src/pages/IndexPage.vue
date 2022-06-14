@@ -52,7 +52,7 @@ export default defineComponent({
         const data = await list()
         lists.value = data
       } catch (error) {
-        c$q.notify({ message: 'Erro ao carregar as listas', icon: 'times', color: 'negative' })
+        $q.notify({ message: 'Erro ao carregar as listas', icon: 'times', color: 'negative' })
       }
     }
 
