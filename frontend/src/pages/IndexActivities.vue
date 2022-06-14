@@ -5,9 +5,6 @@
         :rows="activities"
         :columns="columns"
         row-key="name"
-        :selected-rows-label="getSelectedString"
-        selection="multiple"
-        v-model:selected="selected"
       >
         <template v-slot:top>
           <span class="text-h5">Atividades</span>
@@ -55,7 +52,7 @@ export default defineComponent({
         const data = await activityList(id)
         activities.value = data
       } catch (error) {
-
+        $q.notify({ message: 'Erro ao carregar as atividades', icon: 'times', color: 'negative' })
       }
     }
 

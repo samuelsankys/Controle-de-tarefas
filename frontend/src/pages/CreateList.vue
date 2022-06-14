@@ -64,7 +64,7 @@ export default defineComponent({
         const response = await getById(id)
         form.value = response
       } catch (error) {
-
+        $q.notify({ message: 'Erro ao carregar a lista', icon: 'times', color: 'negative' })
       }
     }
 

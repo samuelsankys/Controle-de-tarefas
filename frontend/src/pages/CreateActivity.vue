@@ -54,7 +54,7 @@ export default defineComponent({
     })
     onMounted(async () => {
       console.log(route.params)
-      if (route.params.id) {
+      if (route.params.activityId) {
         getList(route.params.id, route.params.activityId)
       }
     })
@@ -64,7 +64,7 @@ export default defineComponent({
         const response = await getById(id, idList)
         form.value = response
       } catch (error) {
-
+        $q.notify({ message: 'Erro ao carregar a atividade', icon: 'times', color: 'negative' })
       }
     }
     const onSubmit = async () => {
