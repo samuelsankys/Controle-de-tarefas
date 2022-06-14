@@ -12,6 +12,9 @@
       class="col-lg-6 col-xs-12"
       :rules="[ val => val && val.length > 0 || 'Campo Obrigatório']"
     />
+    <q-select
+      class="col-lg-6 col-xs-6"
+      v-model="form.status" :options="['Finalizado', 'Não finalizado']" label="Status" />
     <div class="col-12 q-gutter-sm">
       <q-btn
       label="Salvar"
@@ -46,7 +49,8 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const form = ref({
-      name: ''
+      name: '',
+      status: ''
     })
 
     onMounted(async () => {
