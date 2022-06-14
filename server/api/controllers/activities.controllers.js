@@ -48,7 +48,7 @@ exports.createActivity = async (req, res)=>{
 
     const activityData = {
         name: req.body.name,
-        status: 'not completed',
+        status: req.body.status,
         list_id
     }
 
