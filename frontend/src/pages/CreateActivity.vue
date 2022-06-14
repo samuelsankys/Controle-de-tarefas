@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import activityService from 'src/services/activities'
 import { useQuasar } from 'quasar'
 import { useRouter, useRoute } from 'vue-router'
@@ -44,7 +44,7 @@ import { useRouter, useRoute } from 'vue-router'
 export default defineComponent({
   name: 'CreateActivity',
   setup () {
-    const { post } = activityService()
+    const { post, getById, update } = activityService()
     const $q = useQuasar()
     const router = useRouter()
     const route = useRoute()
@@ -53,14 +53,15 @@ export default defineComponent({
       status: ''
     })
     onMounted(async () => {
+      console.log(route.params)
       if (route.params.id) {
-        getList(route.params.id)
+        getList(route.params.id, route.params.activityId)
       }
     })
 
-    const getList = async (id) => {
+    const getList = async (id, idList) => {
       try {
-        const response = await getById(id)
+        const response = await getById(id, idList)
         form.value = response
       } catch (error) {
 
@@ -69,7 +70,7 @@ export default defineComponent({
     const onSubmit = async () => {
       try {
         if (form.value.id) {
-          console.log('opa')
+          await update(form.value)
         } else {
           await post(form.value, route.params.id)
         }

@@ -2,7 +2,7 @@
   <q-page padding>
     <q-table
         title="Treats"
-        :rows="activity"
+        :rows="activities"
         :columns="columns"
         row-key="name"
         :selected-rows-label="getSelectedString"
@@ -17,7 +17,7 @@
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-sm">
             <q-btn icon="edit" color="info" dense size="sm" @click="editActivity(props.row.id)"/>
-            <q-btn icon="delete" color="negative" dense size="sm" @click="removeList(props.row.id)"/>
+            <q-btn icon="delete" color="negative" dense size="sm" @click="removeActivity(props.row.id)"/>
           </q-td>
         </template>
       </q-table>
@@ -33,8 +33,8 @@ import { useRouter, useRoute } from 'vue-router'
 export default defineComponent({
   name: 'IndexActivities',
   setup () {
-    const activity = ref([])
-    const { getById, remove } = activityService()
+    const activities = ref([])
+    const { activityList, remove } = activityService()
     const columns = [
       { name: 'id', field: 'id', label: 'Id', sortable: true },
       { name: 'name', field: 'name', label: 'Nome', sortable: true },
@@ -47,27 +47,28 @@ export default defineComponent({
     const route = useRoute()
 
     onMounted(() => {
-      getList()
+      getList(route.params.id)
     })
 
-    const getList = async () => {
+    const getList = async (id) => {
       try {
-        const data = await getById(`${route.params.id}/activity`)
-        activity.value = data
+        const data = await activityList(id)
+        activities.value = data
       } catch (error) {
 
       }
     }
 
-    const removeList = async (id) => {
+    const removeActivity = async (id) => {
+      const idList = route.params.id
       try {
         $q.dialog({
           title: 'Deletar',
           message: 'Deseja realmente deletar essa lista?'
         }).onOk(async () => {
-          await remove(id)
+          await remove(idList, id)
           $q.notify({ message: 'Apagado com sucesso', icon: 'check', color: 'positive' })
-          await getList()
+          await getList(idList)
         })
       } catch (error) {
         $q.notify({ message: 'Erro ao apagar lista', icon: 'times', color: 'negative' })
@@ -75,14 +76,15 @@ export default defineComponent({
     }
 
     const editActivity = async (id) => {
-      const idActivity = `${route.params.id}/activity/${id}`
-      router.push({ name: 'formActivities', params: { idActivity } })
+      const idList = route.params.id
+      router.push({ name: 'formActivities', params: { id: idList, activityId: id } })
     }
 
     return {
-      activity,
+      activities,
+      activityList,
       columns,
-      removeList,
+      removeActivity,
       editActivity
     }
   }

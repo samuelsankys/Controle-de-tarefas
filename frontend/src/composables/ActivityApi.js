@@ -1,16 +1,16 @@
 import { api } from 'boot/axios'
 
 export default function useApi (url) {
-  const list = async () => {
+  const activityList = async (idList) => {
     try {
-      const { data } = await api.get(url)
+      const { data } = await api.get(`${url}/${idList}/activity`)
       return data
     } catch (error) {
       throw new Error(error)
     }
   }
 
-  const getById = async (id, idList) => {
+  const getById = async (idList, id) => {
     try {
       const { data } = await api.get(`${url}/${idList}/activity/${id}`)
       return data
@@ -30,16 +30,16 @@ export default function useApi (url) {
 
   const update = async (form) => {
     try {
-      const { data } = await api.put(`${url}/${form.id}`, form)
+      const { data } = await api.put(`${url}/${form.list_id}/activity/${form.id}`, form)
       return data
     } catch (error) {
       throw new Error(error)
     }
   }
 
-  const remove = async (id) => {
+  const remove = async (idList, id) => {
     try {
-      const { data } = await api.delete(`${url}/${id}`)
+      const { data } = await api.delete(`${url}/${idList}/activity/${id}`)
       return data
     } catch (error) {
       throw new Error(error)
@@ -47,7 +47,7 @@ export default function useApi (url) {
   }
 
   return {
-    list,
+    activityList,
     post,
     update,
     remove,

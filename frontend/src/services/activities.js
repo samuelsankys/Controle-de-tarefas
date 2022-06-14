@@ -1,10 +1,10 @@
 import useApi from 'src/composables/ActivityApi'
 
 export default function activityService () {
-  const { list, post, update, remove, getById } = useApi('')
+  const { activityList, post, update, remove, getById } = useApi('')
 
   return {
-    list,
+    activityList,
     post,
     update,
     remove,
