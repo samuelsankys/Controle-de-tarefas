@@ -31,7 +31,7 @@ exports.createList = async (req, res)=>{
     try {
         const listData = {
             name: req.body.name,
-            status: 'not completed',
+            status: req.body.status,
         }
         const list = await List.create(listData);
 

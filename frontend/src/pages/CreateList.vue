@@ -7,11 +7,14 @@
     <q-input
       outlined
       v-model="form.name"
-      label="Nome"
+      label="Atividade"
       lazy-rules
       class="col-lg-6 col-xs-12"
       :rules="[ val => val && val.length > 0 || 'Campo Obrigatório']"
     />
+    <q-select
+      class="col-lg-6 col-xs-6"
+      v-model="form.status" :options="['Finalizado', 'Não finalizado']" label="Status" />
     <div class="col-12 q-gutter-sm">
       <q-btn
       label="Salvar"
@@ -41,12 +44,13 @@ import { useRouter, useRoute } from 'vue-router'
 export default defineComponent({
   name: 'CreateList',
   setup () {
-    const { post, getById } = listService()
+    const { post, getById, update } = listService()
     const $q = useQuasar()
     const router = useRouter()
     const route = useRoute()
     const form = ref({
-      name: ''
+      name: '',
+      status: ''
     })
 
     onMounted(async () => {
@@ -55,8 +59,8 @@ export default defineComponent({
       }
     })
 
-    const getList = async () => {
-      try { 
+    const getList = async (id) => {
+      try {
         const response = await getById(id)
         form.value = response
       } catch (error) {
@@ -66,7 +70,11 @@ export default defineComponent({
 
     const onSubmit = async () => {
       try {
-        await post(form.value)
+        if (form.value.id) {
+          await update(form.value)
+        } else {
+          await post(form.value)
+        }
         $q.notify({ message: 'Lista criada com sucesso', icon: 'check', color: 'positive' })
         router.push({ name: 'list' })
       } catch (error) {

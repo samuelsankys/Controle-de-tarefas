@@ -23,12 +23,32 @@ exports.getActivitiesList = async (req, res)=> {
     }
 }
 
+exports.getActivity = async (req, res)=> {
+
+    const { list_id, activity_id } = req.params;
+
+    try {
+        const activity = await Activity.findByPk(activity_id);
+       
+        if(activity.length == 0){
+            return res.status(404).json({message: "Activity not found"});
+        }
+        
+        if(activity.list_id != list_id){
+            return res.status(400).json({message: "Activity does not belong to list"});
+        }
+        return res.status(200).json(activity);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
+
 exports.createActivity = async (req, res)=>{
     let { list_id } = req.params;
 
     const activityData = {
         name: req.body.name,
-        status: 'not completed',
+        status: req.body.status,
         list_id
     }
 

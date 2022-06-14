@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Controle de Atividades
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -51,9 +51,9 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Home',
+    title: 'Listas',
     caption: '',
-    icon: 'home',
+    icon: 'list',
     route: { name: 'list' }
   }
 ]
