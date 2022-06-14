@@ -41,7 +41,7 @@ import { useRouter, useRoute } from 'vue-router'
 export default defineComponent({
   name: 'CreateList',
   setup () {
-    const { post, getById } = listService()
+    const { post, getById, update } = listService()
     const $q = useQuasar()
     const router = useRouter()
     const route = useRoute()
@@ -55,8 +55,8 @@ export default defineComponent({
       }
     })
 
-    const getList = async () => {
-      try { 
+    const getList = async (id) => {
+      try {
         const response = await getById(id)
         form.value = response
       } catch (error) {
@@ -66,7 +66,11 @@ export default defineComponent({
 
     const onSubmit = async () => {
       try {
-        await post(form.value)
+        if (form.value.id) {
+          await update(form.value)
+        } else {
+          await post(form.value)
+        }
         $q.notify({ message: 'Lista criada com sucesso', icon: 'check', color: 'positive' })
         router.push({ name: 'list' })
       } catch (error) {

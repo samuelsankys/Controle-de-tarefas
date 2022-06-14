@@ -2,18 +2,21 @@
   <q-page padding>
     <q-table
         title="Treats"
-        :rows="lists"
+        :rows="activity"
         :columns="columns"
         row-key="name"
+        :selected-rows-label="getSelectedString"
+        selection="multiple"
+        v-model:selected="selected"
       >
         <template v-slot:top>
-          <span class="text-h5">Lista de Atividades</span>
+          <span class="text-h5">Activity</span>
           <q-space />
           <q-btn color="primary" label="Nova Lista" :to="{ name: 'formList' }" />
         </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-sm">
-            <q-btn icon="visibility" color="warning" dense size="sm" @click="viewActivitiesList(props.row.id)"/>
+            <q-btn icon="view" color="success" dense size="sm" @click="editList(props.row.id)"/>
             <q-btn icon="edit" color="info" dense size="sm" @click="editList(props.row.id)"/>
             <q-btn icon="delete" color="negative" dense size="sm" @click="removeList(props.row.id)"/>
           </q-td>
@@ -24,15 +27,15 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import listService from 'src/services/lists'
+import activityService from 'src/services/activities'
 import { useQuasar } from 'quasar'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
-  name: 'IndexPage',
+  name: 'IndexActivities',
   setup () {
-    const lists = ref([])
-    const { list, remove } = listService()
+    const activity = ref([])
+    const { getById, remove } = activityService()
     const columns = [
       { name: 'id', field: 'id', label: 'Id', sortable: true },
       { name: 'name', field: 'name', label: 'Nome', sortable: true },
@@ -42,6 +45,7 @@ export default defineComponent({
 
     const $q = useQuasar()
     const router = useRouter()
+    const route = useRoute()
 
     onMounted(() => {
       getList()
@@ -49,10 +53,10 @@ export default defineComponent({
 
     const getList = async () => {
       try {
-        const data = await list()
-        lists.value = data
+        const data = await getById(`${route.params.id}/activity`)
+        activity.value = data
       } catch (error) {
-        console.log(error)
+
       }
     }
 
@@ -75,16 +79,11 @@ export default defineComponent({
       router.push({ name: 'formList', params: { id } })
     }
 
-    const viewActivitiesList = async (id) => {
-      router.push({ name: 'activities', params: { id } })
-    }
-
     return {
-      lists,
+      activity,
       columns,
       removeList,
-      editList,
-      viewActivitiesList
+      editList
     }
   }
 })
